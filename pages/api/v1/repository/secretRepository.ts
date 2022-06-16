@@ -50,17 +50,6 @@ export const storeSecret = (secret: Secret) => {
 }
 
 export const findSecretById = async (id: string): Promise<Secret | undefined> => {
-	const useDynamoDb = false
-	if (!useDynamoDb) {
-		return {
-			id: 'uuid',
-			encryptedText: 'encryptedText',
-			token: 'token',
-			createdDate: '2022-06-16T03:09:58+0000',
-			timeToLiveDuration: 'P3DT4H59M',
-		}
-	}
-
 	const input: GetItemCommandInput = {
 		TableName: tableName,
 		Key: {
@@ -68,7 +57,7 @@ export const findSecretById = async (id: string): Promise<Secret | undefined> =>
 				S: id,
 			},
 		},
-	}
+	};
 
 	const { Item } = await ddb.getItem(input)
 	const secret: Secret = {
@@ -78,7 +67,7 @@ export const findSecretById = async (id: string): Promise<Secret | undefined> =>
 		createdDate: Item.createdDate.S,
 		timeToLiveDuration: Item.timeToLiveDuration.S,
 	}
-	return secret
+	return secret;
 	// console.log(`All secrets=[${JSON.stringify(secrets)}]`);
 	// return secrets.find(s => s.id === id);
 }

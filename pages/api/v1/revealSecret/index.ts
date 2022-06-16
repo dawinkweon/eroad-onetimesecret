@@ -4,7 +4,7 @@ import { findSecretById } from "../repository/secretRepository";
 import { RevealSecretRequest } from "./revealSecretRequest";
 import { RevealSecretResponse } from "./revealSecretResponse";
 
-const post = (request: RevealSecretRequest, res: NextApiResponse) => {
+const post = async(request: RevealSecretRequest, res: NextApiResponse) => {
   console.log(`Revealing secret for token = [${request.token}]`);
 
   if (!request.token) {
@@ -15,8 +15,8 @@ const post = (request: RevealSecretRequest, res: NextApiResponse) => {
     res.status(400).json({ message: "id is missing in body" });
   }
 
-  const secret = findSecretById(request.id);
-  console.log(`Secret found for ${request.id} was [${secret}]`);
+  const secret = await findSecretById(request.id);
+  console.log(`Secret found for ${request.id} was [${JSON.stringify(secret)}]`);
   if (typeof secret === "undefined") {
     // TODO send error, secret does not exist
   }
