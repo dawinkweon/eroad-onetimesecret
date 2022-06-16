@@ -1,10 +1,10 @@
 export default function Footer() {
-  return (
-    <>
-      <footer className="w-screen text-center mt-4">
-    <hr />
-      EROAD's 2022 Hackathon
-      </footer>
-    </>
-  )
+	return (
+		<>
+			<footer className="w-screen text-center ">
+				<hr />
+				<div className="p-4">EROAD's 2022 Hackathon</div>
+			</footer>
+		</>
+	)
 }

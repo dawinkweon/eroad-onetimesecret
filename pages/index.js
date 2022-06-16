@@ -1,21 +1,22 @@
-import Head from 'next/head'
-import Footer from '../components/Footer'
+import { Card } from '@components/Card'
+import { Button } from '@components/Button'
+import { TextArea } from '@components/TextArea'
+import { EroadTitle } from '@components/EroadTitle'
 
 export default function Home() {
-  return (
-    <div className="flex flex-col h-screen justify-items-center items-center">
-      <Head>
-        <title>EROAD One Time Secret</title>
-        <link rel="icon" href="/favicon.ico" />
-      </Head>
+	return (
+		<>
+			<EroadTitle />
 
-      <main>
-        <p className="description">
-          Welcome to EROAD One Time Secret
-        </p>
-      </main>
-
-      <Footer />
-    </div>
-  )
+			<Card>
+				<form className="flex flex-col gap-4">
+					<h3 className="text-md font-bold">What's your secret?</h3>
+					<TextArea value="" />
+					<Button className="self-end" type="submit">
+						Submit
+					</Button>
+				</form>
+			</Card>
+		</>
+	)
 }
