@@ -3,7 +3,7 @@ export default function Footer() {
 		<>
 			<footer className="w-screen text-center ">
 				<hr />
-				<div className="p-4">EROAD's 2022 Hackathon</div>
+				<div className="p-4">EROAD's 2022 Hackathon - 0xdeadbeef team</div>
 			</footer>
 		</>
 	)
