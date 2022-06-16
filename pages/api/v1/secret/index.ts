@@ -6,7 +6,7 @@ import { CreateSecretRequest } from './createSecretRequest'
 import { CreateSecretResponse } from './createSecretResponse'
 import fetch from 'node-fetch'
 
-const post = (request: CreateSecretRequest, res: NextApiResponse) => {
+const post = async(request: CreateSecretRequest, res: NextApiResponse) => {
 	if (typeof request.secretText === 'undefined') {
 		res.status(400).json({ message: 'secretText is missing in body' })
 	}
@@ -39,7 +39,7 @@ const post = (request: CreateSecretRequest, res: NextApiResponse) => {
 		return
 	}
 
-	triggerEmail(secretUrl, request);
+	await triggerEmail(secretUrl, request);
 	res.status(200).json({ message: 'Email sent', type: "EMAIL_SENT" });
 }
 
