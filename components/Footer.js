@@ -1,9 +1,9 @@
 export default function Footer() {
 	return (
 		<>
-			<footer className="w-screen text-center mt-4">
+			<footer className="w-screen text-center ">
 				<hr />
-				EROAD's 2022 Hackathon
+				<div className="p-4">EROAD's 2022 Hackathon</div>
 			</footer>
 		</>
 	)
