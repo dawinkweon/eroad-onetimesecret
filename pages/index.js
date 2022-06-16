@@ -1,19 +1,24 @@
-import Head from 'next/head'
-import Footer from '@components/Footer'
+import { Card } from '@components/Card'
+import { Button } from '@components/Button'
+import { TextArea } from '@components/TextArea'
 
 export default function Home() {
 	return (
-		<div className="flex flex-col h-screen justify-items-center items-center">
-			<Head>
-				<title>EROAD One Time Secret</title>
-				<link rel="icon" href="/favicon.ico" />
-			</Head>
+		<>
+			<section>
+				<h1 className="text-3xl font-bold">EROAD</h1>
+				<h2 className="text-xl tracking-widest">secret sharer</h2>
+			</section>
 
-			<main className="m-auto">
-				<h1 className="text-3xl">Welcome to EROAD One Time Secret</h1>
-			</main>
-
-			<Footer />
-		</div>
+			<Card>
+				<form className="flex flex-col gap-4">
+					<h3 className="text-md font-bold">What's your secret?</h3>
+					<TextArea value="" />
+					<Button className="self-end" type="submit">
+						Submit
+					</Button>
+				</form>
+			</Card>
+		</>
 	)
 }
