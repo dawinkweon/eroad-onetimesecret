@@ -1,9 +1,9 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faSpinner } from '@fortawesome/free-solid-svg-icons'
 
-const Card = ({ children, isLoading = false }) => {
+const Card = ({ className, children, isLoading = false }) => {
 	return (
-		<div className="rounded bg-eroad-red p-4 text-white">
+		<div className={`rounded bg-eroad-red p-4 text-white ${className}`}>
 			{isLoading ? (
 				<div className="flex w-full">
 					<FontAwesomeIcon
