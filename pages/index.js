@@ -1,5 +1,6 @@
 import { useRouter } from 'next/router'
 import { useState } from 'react'
+import axios from 'axios'
 
 import { Card } from '@components/Card'
 import { Button } from '@components/Button'
@@ -17,22 +18,11 @@ export default function Home() {
 	const onFormSubmit = async (event) => {
 		event.preventDefault()
 
-		const JSONdata = JSON.stringify({ secretText: secret })
-		const endpoint = '/api/v1/secret'
+		const response = await axios.post('/api/v1/secret', {
+			secretText: secret,
+		})
 
-		const options = {
-			method: 'POST',
-			headers: {
-				'Content-Type': 'application/json',
-			},
-			body: JSONdata,
-		}
-
-		const response = await fetch(endpoint, options)
-
-		const result = await response.json()
-
-		router.push({ pathname: 'newSecret', query: { url: result.secretUrl } })
+		router.push({ pathname: 'newSecret', query: { url: response.data.secretUrl } })
 	}
 
 	return (
