@@ -1,4 +1,4 @@
-type Secret = {
+export type Secret = {
     id: string;
     encryptedText: string;
     token: string;

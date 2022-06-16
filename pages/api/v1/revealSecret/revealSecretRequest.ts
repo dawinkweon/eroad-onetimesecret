@@ -1,4 +1,4 @@
-type RevealSecretRequest = {
+export type RevealSecretRequest = {
     id: string;
     token: string;
 }

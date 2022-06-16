@@ -1,3 +1,3 @@
-type CreateSecretRequest = {
+export type CreateSecretRequest = {
     secretText: string;
 }
