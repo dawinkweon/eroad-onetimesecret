@@ -1,6 +1,7 @@
-const TextArea = ({ value, name, onChange, isReadOnly = false }) => {
+const TextArea = ({ value, name, onChange, style, isReadOnly = false }) => {
 	return (
 		<textarea
+			style={{...style}}
 			readOnly={isReadOnly}
 			value={value}
             name={name}
