@@ -31,19 +31,19 @@ const post = (request: CreateSecretRequest, res: NextApiResponse) => {
 
 	const response: CreateSecretResponse = {
 		secretUrl,
+    type: "SECRET_URL_GENERATED"
 	}
 
 	if (!request.recipient) {
-		res.status(200).json(response);
-    return;
+		res.status(200).json(response)
+		return
 	}
 
-	triggerEmail();
-	const msg = { message: 'Email sent' }
-	res.status(200).json(msg)
+	triggerEmail(secretUrl, request);
+	res.status(200).json({ message: 'Email sent', type: "EMAIL_SENT" });
 }
 
-async function triggerEmail() {
+async function triggerEmail(secretUrl: string, request: CreateSecretRequest) {
 	try {
 		// 👇️ const response: Response
 		const response = await fetch(
@@ -65,18 +65,17 @@ async function triggerEmail() {
 			throw new Error(`Error! status: ${response.status}`)
 		}
 
-		// 👇️ const result: CreateUserResponse
-		const result = (await response.json()) as CreateUserResponse
+		const result = await response.json()
 
-		console.log('result is: ', JSON.stringify(result, null, 4))
+		console.log('Email API response is: ', JSON.stringify(result, null, 4))
 
 		return result
 	} catch (error) {
 		if (error instanceof Error) {
-			console.log('error message: ', error.message)
+			console.error('error message: ', error.message)
 			return error.message
 		} else {
-			console.log('unexpected error: ', error)
+			console.error('unexpected error: ', error)
 			return 'An unexpected error occurred'
 		}
 	}

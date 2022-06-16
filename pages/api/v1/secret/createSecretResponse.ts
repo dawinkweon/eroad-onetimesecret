@@ -1,3 +1,5 @@
 export type CreateSecretResponse = {
-    secretUrl: string;
+    type: string;
+    secretUrl?: string;
+    message?: string;
 }
