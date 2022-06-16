@@ -5,6 +5,15 @@ import { storeSecret } from '../repository/secretRepository'
 import { CreateSecretRequest } from './createSecretRequest'
 import { CreateSecretResponse } from './createSecretResponse'
 import fetch from 'node-fetch'
+import Cors from 'cors'
+
+
+
+// Initializing the cors middleware
+const cors = Cors({
+	methods: ['GET', 'HEAD', 'POST', 'OPTION'],
+	origin: "*"
+  })
 
 const post = async(request: CreateSecretRequest, res: NextApiResponse) => {
 	if (typeof request.secretText === 'undefined') {
@@ -81,9 +90,12 @@ async function triggerEmail(secretUrl: string, request: CreateSecretRequest) {
 	}
 }
 
-export default function handler(req: NextApiRequest, res: NextApiResponse) {
+export default async function handler(req: NextApiRequest, res: NextApiResponse) {
+	
+	// Run the middleware
+	await runMiddleware(req, res, cors)
+	
 	const request = req.body as CreateSecretRequest
-
 	console.log(`encrypting secret... secret=[${request.secretText}]`)
 
 	if (req.method === 'POST') {
@@ -92,3 +104,25 @@ export default function handler(req: NextApiRequest, res: NextApiResponse) {
 		res.status(404)
 	}
 }
+
+// Helper method to wait for a middleware to execute before continuing
+// And to throw an error when an error happens in a middleware
+function runMiddleware(req, res, fn) {
+	return new Promise((resolve, reject) => {
+	  fn(req, res, (result) => {
+		if (result instanceof Error) {
+		  return reject(result)
+		}
+  
+		return resolve(result)
+	  })
+	})
+  }
+
+export const config = {
+	api: {
+	  bodyParser: {
+		sizeLimit: '1mb',
+	  },
+	},
+  }
