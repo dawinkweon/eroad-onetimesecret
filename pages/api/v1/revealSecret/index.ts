@@ -18,10 +18,14 @@ const post = async(request: RevealSecretRequest, res: NextApiResponse) => {
   const secret = await findSecretById(request.id);
   console.log(`Secret found for ${request.id} was [${JSON.stringify(secret)}]`);
   if (typeof secret === "undefined") {
-    // TODO send error, secret does not exist
+    const response = { "msg": "Secret not found"}
+    res.status(200).json(response);
   }
 
-  // TODO check token matching
+  if (secret.token !== request.token) {
+    const response = { "msg": "Token is wrong"}
+    res.status(200).json(response);
+  }
 
   const mykey = createDecipher("aes-128-cbc", "!fEiDRs@NA6E!V");
   let decryptedText = mykey.update(secret.encryptedText, "hex", "utf8");
