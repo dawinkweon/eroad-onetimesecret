@@ -1,5 +1,20 @@
+const crypto = require('crypto');
+
 export default function handler(req, res) {
-  console.log(`encrypting secret... secret=[${req.body.secretText}]`);
+
+  const post = (req, res) => {
+    console.log(`Revealing secret for token = [${req.body.token}]`);
+
+    if (!req.body.token) {
+     res.status(400).json({ message: "token is missing in body" });
+    }
+
+    const mykey = crypto.createDecipher('aes-128-cbc', '!fEiDRs@NA6E!V');
+    let decryptedText = mykey.update(req.body.token, 'hex', 'utf8')
+    decryptedText += mykey.final('utf8');
+
+    res.status(200).json({ secret: decryptedText });
+  } 
 
   if (req.method === 'POST') {
     post(req, res);
@@ -7,8 +22,4 @@ export default function handler(req, res) {
     res.status(404);
   }
 
-  const post = (req, res) => {
-    console.log(`Revealing secret for token = [${req.body.token}]`);
-    res.status(200).json({ secret: "Some Secret" });
-  } 
 }
