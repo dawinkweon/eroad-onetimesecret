@@ -10,10 +10,10 @@ export default function handler(req, res) {
     }
 
     const mykey = crypto.createDecipher('aes-128-cbc', '!fEiDRs@NA6E!V');
-    let mystr = mykey.update(req.body.token, 'hex', 'utf8')
-    mystr += mykey.final('utf8');
+    let decryptedText = mykey.update(req.body.token, 'hex', 'utf8')
+    decryptedText += mykey.final('utf8');
 
-    res.status(200).json({ secret: mystr });
+    res.status(200).json({ secret: decryptedText });
   } 
 
   if (req.method === 'POST') {

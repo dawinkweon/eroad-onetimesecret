@@ -9,10 +9,10 @@ export default function handler(req, res) {
     }
 
     const mykey = crypto.createCipher('aes-128-cbc', '!fEiDRs@NA6E!V');
-    let mystr = mykey.update(req.body.secretText, 'utf8', 'hex')
-    mystr += mykey.final('hex');
+    let encryptedText = mykey.update(req.body.secretText, 'utf8', 'hex')
+    encryptedText += mykey.final('hex');
 
-    res.status(200).json({ secretUrl: 'http://path.to.secret/?token=' + mystr });
+    res.status(200).json({ secretUrl: 'http://path.to.secret/?token=' + encryptedText });
   }
 
   if (req.method === 'POST') {
