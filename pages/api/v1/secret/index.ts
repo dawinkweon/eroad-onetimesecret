@@ -25,7 +25,7 @@ const post = (request: CreateSecretRequest, res: NextApiResponse) => {
   storeSecret(secret);
 
   const response : CreateSecretResponse = { 
-    secretUrl: 'http://path.to.secret/showSecret/' + uuid + "/?token=" + token
+    secretUrl: `${process.env.HOST_URL}/showSecret/${uuid}/?token=${token}`
   };
   res.status(200).json(response);
 }
