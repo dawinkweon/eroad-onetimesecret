@@ -8,7 +8,7 @@ const Layout = ({ children }) => {
 				<title>EROAD One Time Secret</title>
 				<link rel="icon" href="/favicon.ico" />
 			</Head>
-			<main className="m-auto w-3/4 flex flex-col gap-4">{children}</main>
+			<main className="m-auto lg:w-2/4 md:3/4 flex flex-col gap-4">{children}</main>
 			<Footer />
 		</div>
 	)

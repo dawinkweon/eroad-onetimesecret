@@ -13,15 +13,21 @@ export default function NewSecret() {
 		navigator.clipboard.writeText(url)
 	}
 
+	const handleCreateNewLink = () => {
+		router.push('/')
+	}
+
 	return (
 		<>
 			<EroadTitle />
 
 			<Card className="flex flex-col gap-4">
-				<h3 className="text-md font-bold">Here's your secret</h3>
+				<h3 className="text-md font-bold">
+					Great! Now share this one time secret link with the intended recipient
+				</h3>
 				<TextArea value={url} isReadOnly={true} />
 				<div className="flex self-end gap-4">
-					<Button onClick={handleOnCopyClicked} className="self-end">
+					<Button onClick={handleCreateNewLink} className="self-end" variant="secondary">
 						Create new link
 					</Button>
 

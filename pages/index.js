@@ -11,12 +11,15 @@ export default function Home() {
 	const router = useRouter()
 
 	const [secret, setSecret] = useState('')
+	const [isLoading, setIsLoading] = useState(false)
+
 	const handleOnChange = (event) => {
 		setSecret(event.target.value)
 	}
 
 	const onFormSubmit = async (event) => {
 		event.preventDefault()
+		setIsLoading(true)
 
 		const response = await axios.post('/api/v1/secret', {
 			secretText: secret,
@@ -29,7 +32,7 @@ export default function Home() {
 		<>
 			<EroadTitle />
 
-			<Card>
+			<Card isLoading={isLoading}>
 				<form onSubmit={onFormSubmit} className="flex flex-col gap-4" method="post">
 					<h3 className="text-md font-bold">What's your secret?</h3>
 					<TextArea value={secret} onChange={handleOnChange} name="secretText" />
