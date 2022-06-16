@@ -1,5 +1,5 @@
 export default function handler(req, res) {
-  console.log(`encrypting secret... secret=[${req.body.secretText}]`);
+  console.log(`Revealing secret... secret=[${req.body.secretText}]`);
 
   if (req.method === 'POST') {
     post(req, res);
