@@ -1,3 +1,3 @@
-type CreateSecretResponse = {
+export type CreateSecretResponse = {
     secretUrl: string;
 }

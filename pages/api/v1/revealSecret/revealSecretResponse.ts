@@ -1,3 +1,3 @@
-type RevealSecretResponse = {
+export type RevealSecretResponse = {
     secret: string;
 }
