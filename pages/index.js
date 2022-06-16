@@ -1,6 +1,7 @@
 import { Card } from '@components/Card'
 import { Button } from '@components/Button'
 import { TextArea } from '@components/TextArea'
+import { EroadTitle } from '@components/EroadTitle'
 
 export default function Home() {
 	return (
