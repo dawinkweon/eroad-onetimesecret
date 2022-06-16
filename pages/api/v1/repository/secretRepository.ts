@@ -8,8 +8,8 @@ import { Secret } from '../model/secret'
 const ddb = new DynamoDB({
 	region: process.env.AMAZON_DEFAULT_REGION ?? 'ap-southeast-2',
 	credentials: {
-		accessKeyId: process.env.AMAZON_SECRET_KEY,
-		secretAccessKey: process.env.AMAZON_ACCESS_KEY_ID
+		accessKeyId: process.env.AMAZON_ACCESS_KEY_ID,
+		secretAccessKey: process.env.AMAZON_SECRET_KEY
 	}
 })
 
