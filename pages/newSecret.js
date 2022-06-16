@@ -7,7 +7,7 @@ import { Button } from '@components/Button'
 
 export default function NewSecret() {
 	const router = useRouter()
-	const { url } = router.query
+	const { url, recipient } = router.query
 
 	const handleOnCopyClicked = () => {
 		navigator.clipboard.writeText(url)
@@ -22,18 +22,29 @@ export default function NewSecret() {
 			<EroadTitle />
 
 			<Card className="flex flex-col gap-4">
-				<h3 className="text-md font-bold">
-					Great! Now share this one time secret link with the intended recipient
-				</h3>
-				<TextArea value={url} isReadOnly={true} />
+				{url ? (
+					<>
+						<h3 className="text-md font-bold">
+							Great! Now share this one time secret link with the intended recipient
+						</h3>
+						<TextArea value={url} isReadOnly={true} />
+					</>
+				) : (
+					<h2 className="text-center text-xl">
+						A link to the secret has been sent to the recipient{' '}
+						<span className="font-bold">{recipient}</span>
+					</h2>
+				)}
 				<div className="flex self-end gap-4">
 					<Button onClick={handleCreateNewLink} className="self-end" variant="secondary">
 						Create new link
 					</Button>
 
-					<Button onClick={handleOnCopyClicked} className="self-end">
-						Copy to clipboard
-					</Button>
+					{url && (
+						<Button onClick={handleOnCopyClicked} className="self-end">
+							Copy to clipboard
+						</Button>
+					)}
 				</div>
 			</Card>
 		</>
