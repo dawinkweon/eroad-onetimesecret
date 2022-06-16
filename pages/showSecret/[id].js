@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react'
 import { useRouter } from 'next/router'
+import axios from 'axios'
 
 import { Card } from '@components/Card'
 import { EroadTitle } from '@components/EroadTitle'
@@ -8,13 +9,19 @@ import { Button } from '@components/Button'
 
 const ShowSecret = () => {
 	const router = useRouter()
-	const { id, token } = router.query
 	const [secret, setSecret] = useState('')
+	const { id, token } = router.query
 
 	useEffect(() => {
-		// call api to get the value
-		setSecret('my super secret')
-	}, [])
+		const fetchSecret = async () => {
+			const response = await axios.post('/api/v1/revealSecret', {
+				token,
+				id,
+			})
+			setSecret(response.data.secret)
+		}
+		if (token) fetchSecret()
+	}, [token])
 
 	const handleOnCopyClicked = () => {
 		navigator.clipboard.writeText(secret)
