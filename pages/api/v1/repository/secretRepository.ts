@@ -1,13 +1,16 @@
 import {
 	DynamoDB,
-	DynamoDBClient,
 	GetItemCommandInput,
 	PutItemCommandInput,
 } from '@aws-sdk/client-dynamodb'
 import { Secret } from '../model/secret'
 
 const ddb = new DynamoDB({
-	region: 'ap-southeast-2',
+	region: process.env.AMAZON_DEFAULT_REGION ?? 'ap-southeast-2',
+	credentials: {
+		accessKeyId: process.env.AMAZON_SECRET_KEY,
+		secretAccessKey: process.env.AMAZON_ACCESS_KEY_ID
+	}
 })
 
 const tableName = 'hackathon-eroad-one-time-secret'
