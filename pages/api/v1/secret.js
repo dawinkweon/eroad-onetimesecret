@@ -12,7 +12,9 @@ export default function handler(req, res) {
     let encryptedText = mykey.update(req.body.secretText, 'utf8', 'hex')
     encryptedText += mykey.final('hex');
 
-    res.status(200).json({ secretUrl: 'http://path.to.secret/?token=' + encryptedText });
+    const token = crypto.randomUUID();
+
+    res.status(200).json({ secretUrl: 'http://path.to.secret/?token=' + token + '&encryptedText=' + encryptedText });
   }
 
   if (req.method === 'POST') {
