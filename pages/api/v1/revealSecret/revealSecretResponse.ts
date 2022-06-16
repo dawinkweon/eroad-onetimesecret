@@ -1,0 +1,3 @@
+type RevealSecretResponse = {
+    secret: string;
+}

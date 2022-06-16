@@ -1,0 +1,3 @@
+type CreateSecretResponse = {
+    secretUrl: string;
+}

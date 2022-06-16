@@ -1,0 +1,3 @@
+type CreateSecretRequest = {
+    secretText: string;
+}
