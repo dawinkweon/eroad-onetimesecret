@@ -1,6 +1,8 @@
 import { createDecipher } from "crypto";
-import { NextApiRequest, NextApiResponse } from "next/types";
+import { NextApiRequest, NextApiResponse } from "next";
 import { findSecretById } from "../repository/secretRepository";
+import { RevealSecretRequest } from "./revealSecretRequest";
+import { RevealSecretResponse } from "./revealSecretResponse";
 
 const post = (request: RevealSecretRequest, res: NextApiResponse) => {
   console.log(`Revealing secret for token = [${request.token}]`);

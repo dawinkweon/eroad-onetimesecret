@@ -1,21 +1,84 @@
-const secrets: Array<Secret> = []
+import {
+	DynamoDB,
+	DynamoDBClient,
+	GetItemCommandInput,
+	PutItemCommandInput,
+} from '@aws-sdk/client-dynamodb'
+import { Secret } from '../model/secret'
+
+const ddb = new DynamoDB({
+	region: 'ap-southeast-2',
+})
+
+const tableName = 'hackathon-eroad-one-time-secret'
 
 export const storeSecret = (secret: Secret) => {
 	console.log(`Storing secret... secret=[${JSON.stringify(secret)}]`)
 
-	secrets.push(secret)
-
-	console.log(`All secrets=[${JSON.stringify(secrets)}]`)
+	const params: PutItemCommandInput = {
+		Item: {
+			id: {
+				S: secret.id,
+			},
+			encryptedText: {
+				S: secret.encryptedText,
+			},
+			token: {
+				S: secret.token,
+			},
+			createdDate: {
+				S: secret.createdDate,
+			},
+			timeToLiveDuration: {
+				S: secret.timeToLiveDuration,
+			},
+		},
+		ReturnConsumedCapacity: 'TOTAL',
+		TableName: tableName,
+	}
+	try {
+		ddb.putItem(params, (err, data) => {
+			if (err) {
+				console.log(err, err.stack)
+			} else {
+				console.log(`Successfully putItem for id=[${secret.id}]`)
+			}
+		})
+	} catch (error) {
+		console.error('Could not put item. Error=' + error)
+	}
 }
 
-export const findSecretById = (id: string): Secret | undefined => {
-	return {
-		id: 'uuid',
-		encryptedText: 'encryptedText',
-		token: 'token',
-		createdDate: '2022-06-16T03:09:58+0000',
-		timeToLiveDuration: 'P3DT4H59M',
+export const findSecretById = async (id: string): Promise<Secret | undefined> => {
+	const useDynamoDb = false
+	if (!useDynamoDb) {
+		return {
+			id: 'uuid',
+			encryptedText: 'encryptedText',
+			token: 'token',
+			createdDate: '2022-06-16T03:09:58+0000',
+			timeToLiveDuration: 'P3DT4H59M',
+		}
 	}
+
+	const input: GetItemCommandInput = {
+		TableName: tableName,
+		Key: {
+			id: {
+				S: id,
+			},
+		},
+	}
+
+	const { Item } = await ddb.getItem(input)
+	const secret: Secret = {
+		id: Item.id.S,
+		encryptedText: Item.encryptedText.S,
+		token: Item.token.S,
+		createdDate: Item.createdDate.S,
+		timeToLiveDuration: Item.timeToLiveDuration.S,
+	}
+	return secret
 	// console.log(`All secrets=[${JSON.stringify(secrets)}]`);
 	// return secrets.find(s => s.id === id);
 }

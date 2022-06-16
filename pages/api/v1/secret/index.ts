@@ -1,6 +1,9 @@
 import { createCipher, randomUUID } from "crypto";
 import { NextApiRequest, NextApiResponse } from "next";
+import { Secret } from "../model/secret";
 import { storeSecret } from "../repository/secretRepository";
+import { CreateSecretRequest } from "./createSecretRequest";
+import { CreateSecretResponse } from "./createSecretResponse";
 
 const post = (request: CreateSecretRequest, res: NextApiResponse) => {
 
